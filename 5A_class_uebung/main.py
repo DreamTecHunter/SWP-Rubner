@@ -11,7 +11,6 @@ if __name__ == '__main__':
     worker.to_string()
     empty_group_leader = GroupLeader();
     group_leader = GroupLeader("Laser", "Tobias", 18, Sex.M, Department.P, subordinates)
-
     people: list = [empty_person, person]
     workers: list = [empty_worker, worker]
     group_leaders: list = [empty_group_leader, group_leader]
@@ -28,12 +27,15 @@ if __name__ == '__main__':
     print("departments\t: ")
     for dep in company.find_departments():
         print("\t" + dep.value)
-    """
-    for temp_map in company.find_amount_of_participates_per_departments():
-        print(temp_map)
-    """
+    print()
+    temp_dict = company.find_amount_of_participates_per_departments()
+    for temp_key in temp_dict:
+        print(temp_key.value + "\t: " + str(temp_dict[temp_key]))
 
+    print("\nDepartment with the most workers")
+    temp_dict = company.find_biggest_department()
+    for temp_key in temp_dict:
+        print(temp_key.value + "\t: " + str(temp_dict[temp_key]))
     """
     #Geschlechterverteilung
     """
-

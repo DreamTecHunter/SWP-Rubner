@@ -43,7 +43,7 @@ class Company:
         if people is not None:
             for person in people:
                 is_in_list = False
-                if len(departments) is not 0:
+                if len(departments) != 0:
                     for d in departments:
                         if person.department is d:
                             is_in_list = True
@@ -54,17 +54,29 @@ class Company:
 
     def find_amount_of_participates_per_departments(self):
         temp_worker = self.group_leaders + self.workers;
-        temp_map: map
+        temp_dict: dict = {}
         for d in self.find_departments():
-            temp_map.put(d, 0)
+            temp_dict[d] = 0
         for worker in temp_worker:
-            temp_map.put(worker.department, temp_map.get(temp_worker) + 1)
-        return temp_map
+            temp_dict[worker.department] = temp_dict[worker.department] + 1
+        return temp_dict
 
     def find_biggest_department(self):
-        pass
+        dict = copy.deepcopy(self.find_amount_of_participates_per_departments())
+        sorted_dict = sorted(dict.items(), key=lambda x: x[1], reverse=True)
+        new_dict = {}
+        for d in sorted_dict:
+            if len(new_dict) == 0:
+                new_dict[d[0]] = d[1]
+            else:
+                if new_dict[list(new_dict)[-1]] == d[1]:
+                    new_dict[d[0]] = d[1]
+                else:
+                    break
 
-pass
+        return new_dict
+
+    pass
 
 
 class Person:
@@ -98,6 +110,7 @@ class Worker(Person):
 class GroupLeader(Worker):
     def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, sex: Sex = Sex.NONE_SPECIFIED,
                  department: Department = Department.NONE_SPECIFIED, subordinates: list = None):
+
         super(GroupLeader, self).__init__(lastname, firstname, age, sex, department)
         self.subordinates = subordinates
         pass
