@@ -3,7 +3,7 @@ import copy
 from enum import Enum
 
 
-class Sex(Enum):
+class Gender(Enum):
     NONE_SPECIFIED = "none-specified"
     M = "male"
     F = "female"
@@ -76,28 +76,37 @@ class Company:
 
         return new_dict
 
+    def gender_spread(self):
+        people = self.workers + self.group_leaders
+        spreading = {}
+        for g in Gender:
+            spreading[g] = 0
+        for p in people:
+            spreading[p.gender] = spreading[p.gender] + 1
+        return spreading
+
     pass
 
 
 class Person:
-    def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, sex: Sex = Sex.NONE_SPECIFIED):
+    def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, gender: Gender = Gender.NONE_SPECIFIED):
         self.lastname = lastname
         self.firstname = firstname
         self.age = age
-        self.sex = sex
+        self.gender = gender
         pass
 
     def to_string(self):
         return "name: " + self.lastname + " " + self.firstname + "\nage\t: " + str(
-            self.age) + "\nsex\t: " + self.sex.value
+            self.age) + "\ngender\t: " + self.gender.value
 
     pass
 
 
 class Worker(Person):
-    def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, sex: Sex = Sex.NONE_SPECIFIED,
+    def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, gender: Gender = Gender.NONE_SPECIFIED,
                  department: Department = Department.NONE_SPECIFIED):
-        super(Worker, self).__init__(lastname, firstname, age, sex)
+        super(Worker, self).__init__(lastname, firstname, age, gender)
         self.department = department
         pass
 
@@ -108,10 +117,10 @@ class Worker(Person):
 
 
 class GroupLeader(Worker):
-    def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, sex: Sex = Sex.NONE_SPECIFIED,
+    def __init__(self, lastname: str = "", firstname: str = "", age: int = 0, gender: Gender = Gender.NONE_SPECIFIED,
                  department: Department = Department.NONE_SPECIFIED, subordinates: list = None):
 
-        super(GroupLeader, self).__init__(lastname, firstname, age, sex, department)
+        super(GroupLeader, self).__init__(lastname, firstname, age, gender, department)
         self.subordinates = subordinates
         pass
 

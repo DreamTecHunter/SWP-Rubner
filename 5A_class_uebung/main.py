@@ -1,16 +1,16 @@
 import copy
 
-from Model import Sex, Department, Company, Person, Worker, GroupLeader
+from Model import Gender, Department, Company, Person, Worker, GroupLeader
 
 if __name__ == '__main__':
     empty_person = Person()
-    person = Person("test", "subject", 0, Sex.M)
+    person = Person("test", "subject", 0, Gender.M)
     empty_worker = Worker()
-    worker = Worker("Kefer", "Thomas", 19, Sex.M, Department.P)
+    worker = Worker("Kefer", "Thomas", 19, Gender.M, Department.P)
     subordinates = [person, worker]
     worker.to_string()
     empty_group_leader = GroupLeader();
-    group_leader = GroupLeader("Laser", "Tobias", 18, Sex.M, Department.P, subordinates)
+    group_leader = GroupLeader("Laser", "Tobias", 18, Gender.M, Department.P, subordinates)
     people: list = [empty_person, person]
     workers: list = [empty_worker, worker]
     group_leaders: list = [empty_group_leader, group_leader]
@@ -36,6 +36,8 @@ if __name__ == '__main__':
     temp_dict = company.find_biggest_department()
     for temp_key in temp_dict:
         print(temp_key.value + "\t: " + str(temp_dict[temp_key]))
-    """
-    #Geschlechterverteilung
-    """
+
+    print("\nGender-spreading")
+    gender_spreading = company.gender_spread()
+    for s in gender_spreading:
+        print(s.value + "\t" + str(gender_spreading[s]))
